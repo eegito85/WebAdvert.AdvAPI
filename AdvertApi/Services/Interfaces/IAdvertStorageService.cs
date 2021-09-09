@@ -10,5 +10,6 @@ namespace AdvertApi.Services.Interfaces
     {
         Task<string> Add(AdvertModel advertModel);
         Task Confirm(ConfirmAdvertModel confirmModel);
+        Task<bool> CheckHealthAsync();
     }
 }

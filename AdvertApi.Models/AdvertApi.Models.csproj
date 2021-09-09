@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Authors>Emmanuel Egito</Authors>
+    <Company>None</Company>
+    <Product>Web Advert Microsservices</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>WebAdvertApi.Egito</PackageId>
   </PropertyGroup>
 
 </Project>

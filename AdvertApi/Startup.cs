@@ -15,6 +15,11 @@ using AutoMapper;
 using AdvertApi.Profiles;
 using AdvertApi.Services.Interfaces;
 using AdvertApi.Services;
+using AdvertApi.HealthChecks;
+using hc = Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Text.Json;
+using System.Net.Mime;
+using Microsoft.AspNetCore.Http;
 
 namespace AdvertApi
 {
@@ -33,7 +38,12 @@ namespace AdvertApi
             //services.AddAutoMapper(typeof(Startup));
             services.AddAutoMapper(typeof(AdvertProfile));
             services.AddTransient<IAdvertStorageService, AdvertStorageService>();
+            services.AddTransient<StorageHealthCheck>();
             services.AddControllers();
+
+            //Diagnostics
+            services.AddHealthChecks().AddCheck<StorageHealthCheck>("Storage", null, null, new System.TimeSpan(0, 1, 0));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdvertApi", Version = "v1" });
@@ -49,6 +59,8 @@ namespace AdvertApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdvertApi v1"));
             }
+
+            app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
 
